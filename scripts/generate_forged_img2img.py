@@ -110,7 +110,11 @@ def generate_forgeries(pipe, real_img_path, prompt, out_dir, n, seeds, denoise, 
     
     for i in range(n):
         seed = seeds[i]
-        generator = torch.Generator(device=device).manual_seed(seed)
+        # Ensure generator is on the correct device
+        if device == "cuda":
+            generator = torch.Generator(device="cuda").manual_seed(seed)
+        else:
+            generator = torch.Generator().manual_seed(seed)
         
         output = pipe(
             prompt=prompt, 
@@ -156,13 +160,32 @@ if __name__ == "__main__":
     
     # Load model
     print(f"Loading model: {args.model}")
-    pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
-        args.model, 
-        torch_dtype=torch.float16 if device=="cuda" else torch.float32,
-        safety_checker=None,  # Disable NSFW filter for research purposes
-        requires_safety_checker=False
-    )
-    pipe = pipe.to(device)
+    
+    if device == "cuda":
+        # For GPU: use float16 for better performance and quality
+        pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
+            args.model,
+            torch_dtype=torch.float16,
+            safety_checker=None,
+            requires_safety_checker=False
+        )
+        pipe = pipe.to(device)
+        # Enable memory efficient attention if available
+        try:
+            pipe.enable_xformers_memory_efficient_attention()
+            print("Enabled xformers memory efficient attention")
+        except:
+            print("xformers not available, using default attention")
+    else:
+        # For CPU: use float32
+        pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
+            args.model,
+            torch_dtype=torch.float32,
+            safety_checker=None,
+            requires_safety_checker=False
+        )
+        pipe = pipe.to(device)
+    
     print("Model loaded successfully")
 
     # Load metadata
