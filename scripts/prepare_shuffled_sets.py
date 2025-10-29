@@ -1,0 +1,215 @@
+#!/usr/bin/env python3
+"""
+Prepare shuffled test sets for identity re-identification attacks
+
+This script creates test scenarios where real images are mixed with forged/other
+identity images to simulate the attack scenario described in the research.
+
+Usage:
+    python scripts/prepare_shuffled_sets.py \
+        --data-dir data/organized \
+        --output data/shuffled_sets \
+        --num-sets 100 \
+        --set-size 10
+"""
+
+import os
+import json
+import random
+import shutil
+import argparse
+from pathlib import Path
+from typing import List, Dict, Tuple
+from tqdm import tqdm
+
+
+class ShuffledSetGenerator:
+    """Generate shuffled test sets with real and forged images"""
+    
+    def __init__(self, data_dir: str, min_images_per_identity: int = 10):
+        self.data_dir = Path(data_dir)
+        self.min_images = min_images_per_identity
+        self.identity_dirs = self._load_identities()
+        print(f"Loaded {len(self.identity_dirs)} identities with >= {min_images_per_identity} images")
+    
+    def _load_identities(self) -> List[Dict]:
+        """Load all identity directories and their images"""
+        identities = []
+        for id_dir in self.data_dir.iterdir():
+            if not id_dir.is_dir():
+                continue
+            
+            images = list(id_dir.glob('*.jpg'))
+            if len(images) >= self.min_images:
+                identities.append({
+                    'id': id_dir.name,
+                    'dir': str(id_dir),
+                    'images': [str(img) for img in images]
+                })
+        
+        return identities
+    
+    def create_shuffled_set(self, 
+                           target_identity: Dict,
+                           num_real: int = 1,
+                           num_forged: int = 9,
+                           num_query: int = 1) -> Dict:
+        """
+        Create a single shuffled set for testing
+        
+        Args:
+            target_identity: Identity dict with images
+            num_real: Number of real images to include (usually 1)
+            num_forged: Number of forged/other identity images
+            num_query: Number of query images for the known embedding
+            
+        Returns:
+            Dict containing:
+                - target_identity_id
+                - query_images: List of paths for known user
+                - real_images: List of paths for real images to find
+                - forged_images: List of paths for forged/other images
+                - shuffled_images: Combined list of all candidate images
+        """
+        if len(target_identity['images']) < num_query + num_real:
+            return None
+        
+        sampled_images = random.sample(target_identity['images'], num_query + num_real)
+        query_images = sampled_images[:num_query]
+        real_images = sampled_images[num_query:num_query + num_real]
+        
+        # Sample forged images from other identities
+        # TODO: Use forged images
+        forged_images = []
+        other_identities = [id_dict for id_dict in self.identity_dirs 
+                           if id_dict['id'] != target_identity['id']]
+        
+        for _ in range(num_forged):
+            other_id = random.choice(other_identities)
+            forged_img = random.choice(other_id['images'])
+            forged_images.append(forged_img)
+        
+        candidate_images = real_images + forged_images
+        random.shuffle(candidate_images)
+        
+        return {
+            'target_identity_id': target_identity['id'],
+            'query_images': query_images,
+            'real_images': real_images,
+            'forged_images': forged_images,
+            'candidate_images': candidate_images,
+            'num_real': num_real,
+            'num_forged': num_forged
+        }
+    
+    def generate_test_sets(self, 
+                          num_sets: int,
+                          num_real: int = 1,
+                          num_forged: int = 9,
+                          num_query: int = 1) -> List[Dict]:
+        """Generate multiple shuffled test sets"""
+        test_sets = []
+        
+        for i in tqdm(range(num_sets), desc="Generating test sets"):
+            target_identity = random.choice(self.identity_dirs)
+            
+            test_set = self.create_shuffled_set(
+                target_identity,
+                num_real=num_real,
+                num_forged=num_forged,
+                num_query=num_query
+            )
+            
+            if test_set is not None:
+                test_set['set_id'] = i
+                test_sets.append(test_set)
+        
+        return test_sets
+    
+    def save_test_sets(self, test_sets: List[Dict], output_dir: str, copy_images: bool = False):
+        """Save test sets to disk"""
+        output_path = Path(output_dir)
+        output_path.mkdir(parents=True, exist_ok=True)
+        
+        metadata_file = output_path / 'test_sets_metadata.json'
+        with open(metadata_file, 'w') as f:
+            json.dump(test_sets, f, indent=2)
+        
+        print(f"Saved test sets metadata to: {metadata_file}")
+        
+        if copy_images:
+            print("Copying images to test set directories...")
+            for test_set in tqdm(test_sets, desc="Copying images"):
+                set_dir = output_path / f"set_{test_set['set_id']:04d}"
+                set_dir.mkdir(exist_ok=True)
+                
+                query_dir = set_dir / 'query'
+                candidate_dir = set_dir / 'candidates'
+                query_dir.mkdir(exist_ok=True)
+                candidate_dir.mkdir(exist_ok=True)
+                
+                for i, img_path in enumerate(test_set['query_images']):
+                    dst = query_dir / f"query_{i}_{Path(img_path).name}"
+                    shutil.copy2(img_path, dst)
+                    
+                for i, img_path in enumerate(test_set['candidate_images']):
+                    is_real = img_path in test_set['real_images']
+                    label = 'real' if is_real else 'forged'
+                    dst = candidate_dir / f"candidate_{i:02d}_{label}_{Path(img_path).name}"
+                    shutil.copy2(img_path, dst)
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Prepare shuffled test sets for identity re-identification')
+    parser.add_argument('--data-dir', type=str, default='data/organized',
+                       help='Directory with organized identity images')
+    parser.add_argument('--output', type=str, default='data/shuffled_sets',
+                       help='Output directory for test sets')
+    parser.add_argument('--num-sets', type=int, default=100,
+                       help='Number of test sets to generate')
+    parser.add_argument('--num-real', type=int, default=1,
+                       help='Number of real images per set')
+    parser.add_argument('--num-forged', type=int, default=9,
+                       help='Number of forged images per set')
+    parser.add_argument('--num-query', type=int, default=1,
+                       help='Number of query images per set')
+    parser.add_argument('--min-images', type=int, default=10,
+                       help='Minimum images per identity to include')
+    parser.add_argument('--copy-images', action='store_true',
+                       help='Copy images to test set directories (requires more disk space)')
+    parser.add_argument('--seed', type=int, default=42,
+                       help='Random seed')
+    
+    args = parser.parse_args()
+    
+    random.seed(args.seed)
+    
+    print("="*60)
+    print("Shuffled Test Set Generation")
+    print("="*60)
+    print(f"Data directory: {args.data_dir}")
+    print(f"Output directory: {args.output}")
+    print(f"Number of sets: {args.num_sets}")
+    print(f"Images per set: {args.num_real} real + {args.num_forged} forged")
+    print(f"Query images: {args.num_query}")
+    print()
+    
+    generator = ShuffledSetGenerator(args.data_dir, min_images_per_identity=args.min_images)
+    
+    test_sets = generator.generate_test_sets(
+        num_sets=args.num_sets,
+        num_real=args.num_real,
+        num_forged=args.num_forged,
+        num_query=args.num_query
+    )
+    
+    print(f"\nGenerated {len(test_sets)} test sets")
+    
+    generator.save_test_sets(test_sets, args.output, copy_images=args.copy_images)
+    
+    print("\nDone!")
+
+
+if __name__ == '__main__':
+    main()
+

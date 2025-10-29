@@ -1,0 +1,33 @@
+# Core dependencies for LLM Privacy Research - Identity Re-identification Attack
+
+# Deep Learning Framework
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Face Recognition Models
+facenet-pytorch>=2.5.3
+insightface>=0.7.3
+onnxruntime>=1.15.0  # Required for InsightFace
+
+# Image Processing
+Pillow>=10.0.0
+opencv-python>=4.8.0
+
+# Scientific Computing (numpy 2.x compatible versions)
+numpy>=2.0.0
+scipy>=1.16.0
+scikit-image>=0.25.0
+
+# Data Processing and Utilities
+pandas>=2.0.0
+tqdm>=4.65.0
+
+# Visualization
+matplotlib>=3.10.0
+seaborn>=0.12.0
+
+# Optional: For additional features
+scikit-learn>=1.3.0
+
+# Note: This configuration is tested with numpy 2.x
+# All packages are compatible with numpy 2.2.6
