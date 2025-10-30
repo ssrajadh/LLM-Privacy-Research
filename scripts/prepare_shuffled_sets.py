@@ -26,11 +26,21 @@ from tqdm import tqdm
 class ShuffledSetGenerator:
     """Generate shuffled test sets with real and forged images"""
     
-    def __init__(self, data_dir: str, min_images_per_identity: int = 10):
+    def __init__(self, data_dir: str, forgery_dir: str = None, forgery_mapping: str = None, 
+                 min_images_per_identity: int = 10):
         self.data_dir = Path(data_dir)
+        self.forgery_dir = Path(forgery_dir) if forgery_dir else None
         self.min_images = min_images_per_identity
         self.identity_dirs = self._load_identities()
         print(f"Loaded {len(self.identity_dirs)} identities with >= {min_images_per_identity} images")
+        
+        # Load forgery mapping
+        self.forgery_mapping = {}
+        self.image_path_lookup = {}  # basename -> full path mapping
+        if forgery_mapping and os.path.exists(forgery_mapping):
+            self._load_forgery_mapping(forgery_mapping)
+            self._build_image_lookup()
+            print(f"Loaded {len(self.forgery_mapping)} forged image mappings")
     
     def _load_identities(self) -> List[Dict]:
         """Load all identity directories and their images"""
@@ -48,6 +58,66 @@ class ShuffledSetGenerator:
                 })
         
         return identities
+    
+    def _load_forgery_mapping(self, mapping_file: str):
+        """Load mapping from real images to forged images"""
+        with open(mapping_file, 'r') as f:
+            mapping_list = json.load(f)
+        
+        # Convert to dict: {real_filename: [forged_filenames]}
+        for item in mapping_list:
+            real_img = item['real']
+            forged_imgs = item['forged']
+            # Store with just filename as key
+            self.forgery_mapping[real_img] = forged_imgs
+    
+    def _build_image_lookup(self):
+        """Build lookup table: basename -> {path, identity_id}"""
+        for identity in self.identity_dirs:
+            for img_path in identity['images']:
+                basename = Path(img_path).name
+                self.image_path_lookup[basename] = {
+                    'path': img_path,
+                    'identity_id': identity['id'],
+                    'identity': identity
+                }
+    
+    def create_shuffled_set_from_real(self, real_filename: str, img_info: Dict, num_query: int = 1) -> Dict:
+        """
+        Create a shuffled test set for a specific real image
+        Uses ONLY the forged images specified in mapping.json
+        """
+        target_identity = img_info['identity']
+        real_img_path = img_info['path']
+        
+        # Get query images from same identity (exclude the real image)
+        available_for_query = [img for img in target_identity['images'] if img != real_img_path]
+        if len(available_for_query) < num_query:
+            return None
+        
+        query_images = random.sample(available_for_query, num_query)
+        real_images = [real_img_path]
+        
+        # Get forged images from mapping
+        forged_images = []
+        if real_filename in self.forgery_mapping:
+            forged_list = self.forgery_mapping[real_filename]
+            forged_paths = [str(self.forgery_dir / f) for f in forged_list]
+            forged_images.extend(forged_paths)
+        
+        # Combine and shuffle
+        candidate_images = real_images + forged_images
+        random.shuffle(candidate_images)
+        
+        return {
+            'target_identity_id': target_identity['id'],
+            'query_images': query_images,
+            'real_images': real_images,
+            'forged_images': forged_images,
+            'candidate_images': candidate_images,
+            'num_real': 1,
+            'num_forged': len(forged_images)
+        }
     
     def create_shuffled_set(self, 
                            target_identity: Dict,
@@ -78,16 +148,31 @@ class ShuffledSetGenerator:
         query_images = sampled_images[:num_query]
         real_images = sampled_images[num_query:num_query + num_real]
         
-        # Sample forged images from other identities
-        # TODO: Use forged images
+        # Sample forged images
         forged_images = []
-        other_identities = [id_dict for id_dict in self.identity_dirs 
-                           if id_dict['id'] != target_identity['id']]
         
-        for _ in range(num_forged):
-            other_id = random.choice(other_identities)
-            forged_img = random.choice(other_id['images'])
-            forged_images.append(forged_img)
+        if self.forgery_mapping and self.forgery_dir:
+            # ONLY use generated forged images from mapping.json
+            for real_img_path in real_images:
+                real_filename = Path(real_img_path).name
+                
+                if real_filename in self.forgery_mapping:
+                    # Get forged images for this real image
+                    forged_list = self.forgery_mapping[real_filename]
+                    # Convert to full paths
+                    forged_paths = [str(self.forgery_dir / f) for f in forged_list]
+                    
+                    # Use ALL forged images from mapping (typically 3 per real image)
+                    forged_images.extend(forged_paths)
+        else:
+            # Fallback: if no forgery mapping, use random images from other identities
+            other_identities = [id_dict for id_dict in self.identity_dirs 
+                               if id_dict['id'] != target_identity['id']]
+            
+            for _ in range(num_forged):
+                other_id = random.choice(other_identities)
+                forged_img = random.choice(other_id['images'])
+                forged_images.append(forged_img)
         
         candidate_images = real_images + forged_images
         random.shuffle(candidate_images)
@@ -110,19 +195,58 @@ class ShuffledSetGenerator:
         """Generate multiple shuffled test sets"""
         test_sets = []
         
-        for i in tqdm(range(num_sets), desc="Generating test sets"):
-            target_identity = random.choice(self.identity_dirs)
+        # If using forgery mapping, only use images that have forged versions
+        if self.forgery_mapping:
+            # Get all real images that have forged versions
+            available_real_images = []
+            for real_filename in self.forgery_mapping.keys():
+                if real_filename in self.image_path_lookup:
+                    available_real_images.append(real_filename)
             
-            test_set = self.create_shuffled_set(
-                target_identity,
-                num_real=num_real,
-                num_forged=num_forged,
-                num_query=num_query
-            )
+            if not available_real_images:
+                print("ERROR: No real images from mapping found in data directory!")
+                return test_sets
             
-            if test_set is not None:
-                test_set['set_id'] = i
-                test_sets.append(test_set)
+            print(f"Using {len(available_real_images)} real images from forgery mapping")
+            
+            # Generate test sets using only mapped real images
+            used_images = set()
+            for i in tqdm(range(num_sets), desc="Generating test sets"):
+                # Pick a real image that hasn't been used yet (if possible)
+                available = [img for img in available_real_images if img not in used_images]
+                if not available:
+                    # If all used, reset
+                    available = available_real_images
+                    used_images.clear()
+                
+                real_filename = random.choice(available)
+                used_images.add(real_filename)
+                
+                img_info = self.image_path_lookup[real_filename]
+                test_set = self.create_shuffled_set_from_real(
+                    real_filename,
+                    img_info,
+                    num_query=num_query
+                )
+                
+                if test_set is not None:
+                    test_set['set_id'] = i
+                    test_sets.append(test_set)
+        else:
+            # Original behavior: random identities
+            for i in tqdm(range(num_sets), desc="Generating test sets"):
+                target_identity = random.choice(self.identity_dirs)
+                
+                test_set = self.create_shuffled_set(
+                    target_identity,
+                    num_real=num_real,
+                    num_forged=num_forged,
+                    num_query=num_query
+                )
+                
+                if test_set is not None:
+                    test_set['set_id'] = i
+                    test_sets.append(test_set)
         
         return test_sets
     
@@ -163,6 +287,10 @@ def main():
     parser = argparse.ArgumentParser(description='Prepare shuffled test sets for identity re-identification')
     parser.add_argument('--data-dir', type=str, default='data/organized',
                        help='Directory with organized identity images')
+    parser.add_argument('--forgery-dir', type=str, default=None,
+                       help='Directory containing generated forged images (optional)')
+    parser.add_argument('--forgery-mapping', type=str, default=None,
+                       help='JSON file mapping real images to forged images (optional)')
     parser.add_argument('--output', type=str, default='data/shuffled_sets',
                        help='Output directory for test sets')
     parser.add_argument('--num-sets', type=int, default=100,
@@ -194,7 +322,12 @@ def main():
     print(f"Query images: {args.num_query}")
     print()
     
-    generator = ShuffledSetGenerator(args.data_dir, min_images_per_identity=args.min_images)
+    generator = ShuffledSetGenerator(
+        args.data_dir, 
+        forgery_dir=args.forgery_dir,
+        forgery_mapping=args.forgery_mapping,
+        min_images_per_identity=args.min_images
+    )
     
     test_sets = generator.generate_test_sets(
         num_sets=args.num_sets,
