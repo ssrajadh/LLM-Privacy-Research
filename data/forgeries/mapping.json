@@ -1,1 +1,1102 @@
-[]
+[
+  {
+    "real": "000001.jpg",
+    "forged": [
+      "000001_forg_945865907.png",
+      "000001_forg_85244361.png",
+      "000001_forg_258308819.png",
+      "000001_forg_108947418.png",
+      "000001_forg_374161547.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      945865907,
+      85244361,
+      258308819,
+      108947418,
+      374161547
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000002.jpg",
+    "forged": [
+      "000002_forg_16944468.png",
+      "000002_forg_1005539128.png",
+      "000002_forg_121896204.png",
+      "000002_forg_955839054.png",
+      "000002_forg_837900499.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      16944468,
+      1005539128,
+      121896204,
+      955839054,
+      837900499
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000003.jpg",
+    "forged": [
+      "000003_forg_311284172.png",
+      "000003_forg_812782856.png",
+      "000003_forg_67070433.png",
+      "000003_forg_248598256.png",
+      "000003_forg_328017845.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, , ",
+    "seeds": [
+      311284172,
+      812782856,
+      67070433,
+      248598256,
+      328017845
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000004.jpg",
+    "forged": [
+      "000004_forg_63879504.png",
+      "000004_forg_744854630.png",
+      "000004_forg_139122862.png",
+      "000004_forg_477058207.png",
+      "000004_forg_556240041.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      63879504,
+      744854630,
+      139122862,
+      477058207,
+      556240041
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000005.jpg",
+    "forged": [
+      "000005_forg_1040689308.png",
+      "000005_forg_49141919.png",
+      "000005_forg_936335223.png",
+      "000005_forg_430967280.png",
+      "000005_forg_668868726.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      1040689308,
+      49141919,
+      936335223,
+      430967280,
+      668868726
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000006.jpg",
+    "forged": [
+      "000006_forg_423321620.png",
+      "000006_forg_309172288.png",
+      "000006_forg_935199608.png",
+      "000006_forg_1031188916.png",
+      "000006_forg_788277381.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      423321620,
+      309172288,
+      935199608,
+      1031188916,
+      788277381
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000007.jpg",
+    "forged": [
+      "000007_forg_405799922.png",
+      "000007_forg_481729855.png",
+      "000007_forg_88966263.png",
+      "000007_forg_125840371.png",
+      "000007_forg_205048614.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, Black Hair, ",
+    "seeds": [
+      405799922,
+      481729855,
+      88966263,
+      125840371,
+      205048614
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000008.jpg",
+    "forged": [
+      "000008_forg_845758881.png",
+      "000008_forg_541053265.png",
+      "000008_forg_609102215.png",
+      "000008_forg_791698567.png",
+      "000008_forg_1023261801.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, Black Hair, ",
+    "seeds": [
+      845758881,
+      541053265,
+      609102215,
+      791698567,
+      1023261801
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000009.jpg",
+    "forged": [
+      "000009_forg_282913265.png",
+      "000009_forg_651304645.png",
+      "000009_forg_342598795.png",
+      "000009_forg_368718978.png",
+      "000009_forg_1015852595.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      282913265,
+      651304645,
+      342598795,
+      368718978,
+      1015852595
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000010.jpg",
+    "forged": [
+      "000010_forg_925536900.png",
+      "000010_forg_396433984.png",
+      "000010_forg_996864028.png",
+      "000010_forg_868451534.png",
+      "000010_forg_181732959.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      925536900,
+      396433984,
+      996864028,
+      868451534,
+      181732959
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000011.jpg",
+    "forged": [
+      "000011_forg_223260413.png",
+      "000011_forg_116355297.png",
+      "000011_forg_388400685.png",
+      "000011_forg_165836334.png",
+      "000011_forg_459868892.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, Smiling",
+    "seeds": [
+      223260413,
+      116355297,
+      388400685,
+      165836334,
+      459868892
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000012.jpg",
+    "forged": [
+      "000012_forg_235845906.png",
+      "000012_forg_502715519.png",
+      "000012_forg_447176644.png",
+      "000012_forg_927899802.png",
+      "000012_forg_147630800.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, Black Hair, Smiling",
+    "seeds": [
+      235845906,
+      502715519,
+      447176644,
+      927899802,
+      147630800
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000013.jpg",
+    "forged": [
+      "000013_forg_253616633.png",
+      "000013_forg_102752004.png",
+      "000013_forg_1011586714.png",
+      "000013_forg_239546612.png",
+      "000013_forg_725802471.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, , Smiling",
+    "seeds": [
+      253616633,
+      102752004,
+      1011586714,
+      239546612,
+      725802471
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000014.jpg",
+    "forged": [
+      "000014_forg_1063782807.png",
+      "000014_forg_850767374.png",
+      "000014_forg_641254116.png",
+      "000014_forg_647520574.png",
+      "000014_forg_27888149.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, Smiling",
+    "seeds": [
+      1063782807,
+      850767374,
+      641254116,
+      647520574,
+      27888149
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000015.jpg",
+    "forged": [
+      "000015_forg_913496082.png",
+      "000015_forg_461555196.png",
+      "000015_forg_148750860.png",
+      "000015_forg_627593199.png",
+      "000015_forg_254347867.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, , , ",
+    "seeds": [
+      913496082,
+      461555196,
+      148750860,
+      627593199,
+      254347867
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000016.jpg",
+    "forged": [
+      "000016_forg_1045649580.png",
+      "000016_forg_857325813.png",
+      "000016_forg_709131512.png",
+      "000016_forg_171222644.png",
+      "000016_forg_579576034.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, , Smiling",
+    "seeds": [
+      1045649580,
+      857325813,
+      709131512,
+      171222644,
+      579576034
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000017.jpg",
+    "forged": [
+      "000017_forg_540025383.png",
+      "000017_forg_377222949.png",
+      "000017_forg_424346470.png",
+      "000017_forg_452111160.png",
+      "000017_forg_1069135288.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, Smiling",
+    "seeds": [
+      540025383,
+      377222949,
+      424346470,
+      452111160,
+      1069135288
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000018.jpg",
+    "forged": [
+      "000018_forg_256353773.png",
+      "000018_forg_445012522.png",
+      "000018_forg_87680105.png",
+      "000018_forg_196347835.png",
+      "000018_forg_264113034.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , , , Smiling",
+    "seeds": [
+      256353773,
+      445012522,
+      87680105,
+      196347835,
+      264113034
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000019.jpg",
+    "forged": [
+      "000019_forg_339254147.png",
+      "000019_forg_1028945893.png",
+      "000019_forg_812865874.png",
+      "000019_forg_196513204.png",
+      "000019_forg_136600941.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      339254147,
+      1028945893,
+      812865874,
+      196513204,
+      136600941
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000020.jpg",
+    "forged": [
+      "000020_forg_142737144.png",
+      "000020_forg_943442563.png",
+      "000020_forg_1068977382.png",
+      "000020_forg_403881092.png",
+      "000020_forg_591107704.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, Black Hair, ",
+    "seeds": [
+      142737144,
+      943442563,
+      1068977382,
+      403881092,
+      591107704
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000021.jpg",
+    "forged": [
+      "000021_forg_889805926.png",
+      "000021_forg_797815949.png",
+      "000021_forg_79671986.png",
+      "000021_forg_499799852.png",
+      "000021_forg_815611146.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, , , Smiling",
+    "seeds": [
+      889805926,
+      797815949,
+      79671986,
+      499799852,
+      815611146
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000022.jpg",
+    "forged": [
+      "000022_forg_162718291.png",
+      "000022_forg_477794301.png",
+      "000022_forg_98991712.png",
+      "000022_forg_505663282.png",
+      "000022_forg_147649450.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      162718291,
+      477794301,
+      98991712,
+      505663282,
+      147649450
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000023.jpg",
+    "forged": [
+      "000023_forg_76601467.png",
+      "000023_forg_885292105.png",
+      "000023_forg_779263894.png",
+      "000023_forg_320535412.png",
+      "000023_forg_601540037.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, , Smiling",
+    "seeds": [
+      76601467,
+      885292105,
+      779263894,
+      320535412,
+      601540037
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000024.jpg",
+    "forged": [
+      "000024_forg_248414999.png",
+      "000024_forg_754129684.png",
+      "000024_forg_890573967.png",
+      "000024_forg_794535818.png",
+      "000024_forg_6898307.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      248414999,
+      754129684,
+      890573967,
+      794535818,
+      6898307
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000025.jpg",
+    "forged": [
+      "000025_forg_989153941.png",
+      "000025_forg_146951065.png",
+      "000025_forg_669816224.png",
+      "000025_forg_668360477.png",
+      "000025_forg_585259357.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, , ",
+    "seeds": [
+      989153941,
+      146951065,
+      669816224,
+      668360477,
+      585259357
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000026.jpg",
+    "forged": [
+      "000026_forg_307738089.png",
+      "000026_forg_429585191.png",
+      "000026_forg_342999608.png",
+      "000026_forg_383588937.png",
+      "000026_forg_294775291.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      307738089,
+      429585191,
+      342999608,
+      383588937,
+      294775291
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000027.jpg",
+    "forged": [
+      "000027_forg_453628030.png",
+      "000027_forg_136866892.png",
+      "000027_forg_566513523.png",
+      "000027_forg_459882313.png",
+      "000027_forg_840656544.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, Smiling",
+    "seeds": [
+      453628030,
+      136866892,
+      566513523,
+      459882313,
+      840656544
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000028.jpg",
+    "forged": [
+      "000028_forg_975166433.png",
+      "000028_forg_28756815.png",
+      "000028_forg_373691800.png",
+      "000028_forg_947619729.png",
+      "000028_forg_142220847.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      975166433,
+      28756815,
+      373691800,
+      947619729,
+      142220847
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000029.jpg",
+    "forged": [
+      "000029_forg_324757139.png",
+      "000029_forg_14449747.png",
+      "000029_forg_481714046.png",
+      "000029_forg_552775788.png",
+      "000029_forg_1012054540.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      324757139,
+      14449747,
+      481714046,
+      552775788,
+      1012054540
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000030.jpg",
+    "forged": [
+      "000030_forg_870475224.png",
+      "000030_forg_345723860.png",
+      "000030_forg_326579402.png",
+      "000030_forg_919518426.png",
+      "000030_forg_1001311763.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, , , ",
+    "seeds": [
+      870475224,
+      345723860,
+      326579402,
+      919518426,
+      1001311763
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000031.jpg",
+    "forged": [
+      "000031_forg_893157366.png",
+      "000031_forg_956026996.png",
+      "000031_forg_501942006.png",
+      "000031_forg_680267853.png",
+      "000031_forg_324288048.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      893157366,
+      956026996,
+      501942006,
+      680267853,
+      324288048
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000032.jpg",
+    "forged": [
+      "000032_forg_521804962.png",
+      "000032_forg_901945422.png",
+      "000032_forg_992927216.png",
+      "000032_forg_439290553.png",
+      "000032_forg_588054849.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, , , ",
+    "seeds": [
+      521804962,
+      901945422,
+      992927216,
+      439290553,
+      588054849
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000033.jpg",
+    "forged": [
+      "000033_forg_623578957.png",
+      "000033_forg_817173759.png",
+      "000033_forg_354714397.png",
+      "000033_forg_655820632.png",
+      "000033_forg_928310638.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, Black Hair, Smiling",
+    "seeds": [
+      623578957,
+      817173759,
+      354714397,
+      655820632,
+      928310638
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000034.jpg",
+    "forged": [
+      "000034_forg_295952604.png",
+      "000034_forg_45220736.png",
+      "000034_forg_604980030.png",
+      "000034_forg_47296413.png",
+      "000034_forg_796190120.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , ",
+    "seeds": [
+      295952604,
+      45220736,
+      604980030,
+      47296413,
+      796190120
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000035.jpg",
+    "forged": [
+      "000035_forg_650128421.png",
+      "000035_forg_70970638.png",
+      "000035_forg_638803185.png",
+      "000035_forg_580820074.png",
+      "000035_forg_142753135.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, ",
+    "seeds": [
+      650128421,
+      70970638,
+      638803185,
+      580820074,
+      142753135
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000036.jpg",
+    "forged": [
+      "000036_forg_952921571.png",
+      "000036_forg_780475358.png",
+      "000036_forg_678988140.png",
+      "000036_forg_503853818.png",
+      "000036_forg_813291322.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, Black Hair, ",
+    "seeds": [
+      952921571,
+      780475358,
+      678988140,
+      503853818,
+      813291322
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000037.jpg",
+    "forged": [
+      "000037_forg_843983004.png",
+      "000037_forg_316024103.png",
+      "000037_forg_106368660.png",
+      "000037_forg_140073717.png",
+      "000037_forg_300146382.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, , ",
+    "seeds": [
+      843983004,
+      316024103,
+      106368660,
+      140073717,
+      300146382
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000038.jpg",
+    "forged": [
+      "000038_forg_807803836.png",
+      "000038_forg_57943531.png",
+      "000038_forg_1059076114.png",
+      "000038_forg_541596012.png",
+      "000038_forg_688374055.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, , Smiling",
+    "seeds": [
+      807803836,
+      57943531,
+      1059076114,
+      541596012,
+      688374055
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000039.jpg",
+    "forged": [
+      "000039_forg_345296309.png",
+      "000039_forg_931747921.png",
+      "000039_forg_642166357.png",
+      "000039_forg_405597134.png",
+      "000039_forg_369347244.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      345296309,
+      931747921,
+      642166357,
+      405597134,
+      369347244
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000040.jpg",
+    "forged": [
+      "000040_forg_437972494.png",
+      "000040_forg_2655315.png",
+      "000040_forg_931729092.png",
+      "000040_forg_510285166.png",
+      "000040_forg_262517334.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, ",
+    "seeds": [
+      437972494,
+      2655315,
+      931729092,
+      510285166,
+      262517334
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000041.jpg",
+    "forged": [
+      "000041_forg_958683003.png",
+      "000041_forg_799906207.png",
+      "000041_forg_767583665.png",
+      "000041_forg_20979868.png",
+      "000041_forg_195643577.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, Black Hair, Smiling",
+    "seeds": [
+      958683003,
+      799906207,
+      767583665,
+      20979868,
+      195643577
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000042.jpg",
+    "forged": [
+      "000042_forg_979144776.png",
+      "000042_forg_909403426.png",
+      "000042_forg_597349311.png",
+      "000042_forg_714666478.png",
+      "000042_forg_583406400.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      979144776,
+      909403426,
+      597349311,
+      714666478,
+      583406400
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000043.jpg",
+    "forged": [
+      "000043_forg_709831565.png",
+      "000043_forg_880800925.png",
+      "000043_forg_221457086.png",
+      "000043_forg_815971227.png",
+      "000043_forg_560003047.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      709831565,
+      880800925,
+      221457086,
+      815971227,
+      560003047
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000044.jpg",
+    "forged": [
+      "000044_forg_892489585.png",
+      "000044_forg_921314561.png",
+      "000044_forg_53092966.png",
+      "000044_forg_1064950007.png",
+      "000044_forg_830470831.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, ",
+    "seeds": [
+      892489585,
+      921314561,
+      53092966,
+      1064950007,
+      830470831
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000045.jpg",
+    "forged": [
+      "000045_forg_992148787.png",
+      "000045_forg_498689781.png",
+      "000045_forg_104372992.png",
+      "000045_forg_264964656.png",
+      "000045_forg_384507369.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, , Smiling",
+    "seeds": [
+      992148787,
+      498689781,
+      104372992,
+      264964656,
+      384507369
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000046.jpg",
+    "forged": [
+      "000046_forg_59239052.png",
+      "000046_forg_924771595.png",
+      "000046_forg_43975332.png",
+      "000046_forg_902007809.png",
+      "000046_forg_666161570.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, Smiling",
+    "seeds": [
+      59239052,
+      924771595,
+      43975332,
+      902007809,
+      666161570
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000047.jpg",
+    "forged": [
+      "000047_forg_200995858.png",
+      "000047_forg_365711008.png",
+      "000047_forg_586737731.png",
+      "000047_forg_215839050.png",
+      "000047_forg_221392862.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, , Young, Black Hair, Smiling",
+    "seeds": [
+      200995858,
+      365711008,
+      586737731,
+      215839050,
+      221392862
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000048.jpg",
+    "forged": [
+      "000048_forg_349303713.png",
+      "000048_forg_956057616.png",
+      "000048_forg_881700601.png",
+      "000048_forg_862795780.png",
+      "000048_forg_5095995.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, , ",
+    "seeds": [
+      349303713,
+      956057616,
+      881700601,
+      862795780,
+      5095995
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000049.jpg",
+    "forged": [
+      "000049_forg_178873937.png",
+      "000049_forg_859520017.png",
+      "000049_forg_469957175.png",
+      "000049_forg_347759111.png",
+      "000049_forg_76746136.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, , Black Hair, ",
+    "seeds": [
+      178873937,
+      859520017,
+      469957175,
+      347759111,
+      76746136
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  },
+  {
+    "real": "000050.jpg",
+    "forged": [
+      "000050_forg_682207826.png",
+      "000050_forg_251180947.png",
+      "000050_forg_953972475.png",
+      "000050_forg_565314801.png",
+      "000050_forg_313098989.png"
+    ],
+    "prompt": "a high-quality portrait photo of a person, Male, Young, Black Hair, Smiling",
+    "seeds": [
+      682207826,
+      251180947,
+      953972475,
+      565314801,
+      313098989
+    ],
+    "model": "stabilityai/stable-diffusion-2-1",
+    "cfg_scale": 9.0,
+    "steps": 100,
+    "denoising_strength": 0.35
+  }
+]
