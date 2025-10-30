@@ -1,0 +1,27 @@
+{
+  "args": {
+    "test_sets": "data/shuffled_sets/test_sets_metadata.json",
+    "model": "facenet",
+    "output": "results/eval.json",
+    "device": "cuda",
+    "max_sets": null,
+    "save_predictions": false
+  },
+  "metrics": {
+    "total_tests": 50,
+    "successful_tests": 50,
+    "top1_accuracy": 0.96,
+    "top1_correct_count": 48,
+    "precision": 0.96,
+    "recall": 0.96,
+    "f1_score": 0.96,
+    "avg_similarity": 0.6302995137497782,
+    "std_similarity": 0.22975683201853636,
+    "min_similarity": 0.015697859227657318,
+    "max_similarity": 0.8838973045349121,
+    "avg_similarity_correct": 0.6505265441179896,
+    "std_similarity_correct": 0.21031609380107205,
+    "avg_similarity_incorrect": 0.14485078491270542,
+    "std_similarity_incorrect": 0.11241338215768337
+  }
+}

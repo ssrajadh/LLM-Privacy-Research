@@ -1,0 +1,27 @@
+{
+  "args": {
+    "test_sets": "data/shuffled_sets/test_sets_metadata.json",
+    "model": "arcface",
+    "output": "results/eval_arcface.json",
+    "device": "cuda",
+    "max_sets": null,
+    "save_predictions": false
+  },
+  "metrics": {
+    "total_tests": 50,
+    "successful_tests": 50,
+    "top1_accuracy": 0.98,
+    "top1_correct_count": 49,
+    "precision": 0.98,
+    "recall": 0.98,
+    "f1_score": 0.98,
+    "avg_similarity": 0.57773387350142,
+    "std_similarity": 0.19272676798330834,
+    "min_similarity": -0.11839498579502106,
+    "max_similarity": 0.8333569169044495,
+    "avg_similarity_correct": 0.5867527617635776,
+    "std_similarity_correct": 0.18394190012319578,
+    "avg_similarity_incorrect": 0.13580834865570068,
+    "std_similarity_incorrect": 0.0
+  }
+}

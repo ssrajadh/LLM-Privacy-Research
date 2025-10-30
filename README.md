@@ -215,6 +215,149 @@ Check:
 3. Use `--limit 2` for testing
 4. Check that identity mapping loaded: look for "Loaded identity mapping" in output
 
+### 5. Prepare Test Sets for Attack Evaluation
+
+Generate shuffled test sets with multiple identities (real + forged images):
+
+```bash
+python scripts/prepare_shuffled_sets.py \
+  --data-dir data/organized \
+  --forgery-dir data/forgeries \
+  --forgery-mapping data/forgeries/mapping.json \
+  --output data/shuffled_sets \
+  --num-sets 50 \
+  --seed 42
+```
+
+**Parameters:**
+- `--data-dir`: Directory with organized identity folders
+- `--forgery-dir`: Directory with generated forged images
+- `--forgery-mapping`: Path to mapping.json file
+- `--output`: Output directory for test sets
+- `--num-sets`: Number of test sets to generate
+- `--seed`: Random seed for reproducibility
+
+**Test Set Structure:**
+Each test set contains:
+- 1 query image (target identity)
+- 1 target real image + 3 forged (to find)
+- 9 other identities (each with 1 real + 3 forged)
+- Total: 40 candidate images (10 identities × 4 images)
+
+### 6. Evaluate Re-identification Attack
+
+Test face recognition robustness using embedding-based attacks:
+
+```bash
+python scripts/evaluate_attack.py \
+  --test-sets data/shuffled_sets/test_sets_metadata.json \
+  --model facenet \
+  --output results/eval_results.json
+```
+
+**Parameters:**
+- `--test-sets`: Path to test set metadata
+- `--model`: Model to use (`facenet` or `arcface`)
+- `--output`: Output file for results
+- `--max-sets`: (Optional) Limit number of test sets
+
+**Models:**
+- `facenet`: InceptionResnetV1 trained on VGGFace2
+- `arcface`: InsightFace ArcFace model (requires GPU)
+
+**Example Results:**
+```
+Top-1 Accuracy: 92% (46/50)
+- Query: Target's profile photo
+- Found: Target's real image among 40 candidates
+- Success: 92% re-identification rate despite forgery protection
+```
+
+### 7. View Results
+
+```bash
+# View detailed results
+cat results/eval_results.json
+
+# Quick summary
+python -c "
+import json
+with open('results/eval_results.json') as f:
+    data = json.load(f)
+    m = data['metrics']
+    print(f\"Top-1 Accuracy: {m['top1_accuracy']:.2%}\")
+    print(f\"Total Tests: {m['total_tests']}\")
+    print(f\"Correct: {m['top1_correct_count']}\")
+"
+```
+
+**Results Explanation:**
+
+The output JSON contains comprehensive metrics:
+
+```json
+{
+  "metrics": {
+    "total_tests": 50,              // Number of test sets evaluated
+    "successful_tests": 50,          // Tests completed without errors
+    "top1_accuracy": 0.92,           // % of correct Top-1 predictions
+    "top1_correct_count": 46,        // Number of correct predictions
+    "precision": 0.92,               // True Positives / (True Positives + False Positives)
+    "recall": 0.92,                  // True Positives / (True Positives + False Negatives)
+    "f1_score": 0.92,                // Harmonic mean of precision and recall
+    "avg_similarity": 0.65,          // Average cosine similarity across all predictions
+    "std_similarity": 0.16,          // Standard deviation of similarities
+    "min_similarity": -0.01,         // Lowest similarity score
+    "max_similarity": 0.91,          // Highest similarity score
+    "avg_similarity_correct": 0.70,  // Average similarity for CORRECT predictions
+    "std_similarity_correct": 0.15,  // Std dev for correct predictions
+    "avg_similarity_incorrect": 0.38,// Average similarity for INCORRECT predictions
+    "std_similarity_incorrect": 0.02 // Std dev for incorrect predictions
+  }
+}
+```
+
+**Key Metrics Interpretation:**
+
+1. **Top-1 Accuracy** (e.g., 0.92 = 92%)
+   - Measures: How often the attacker correctly identifies the target's real image
+   - **Higher is WORSE for privacy** ⚠️
+   - 92% = Attack succeeds 92% of the time
+   - <10% = Strong privacy protection ✅
+   - >90% = Privacy protection failed ❌
+
+2. **Precision & Recall** (e.g., 0.92)
+   - Measures: Classification quality of the attack
+   - **Higher is WORSE for privacy** ⚠️
+   - Values close to 1.0 = Very reliable attack
+   - Values close to 0.1 = Unreliable attack (good for privacy)
+
+3. **F1 Score** (e.g., 0.92)
+   - Measures: Overall attack effectiveness (harmonic mean of precision/recall)
+   - **Higher is WORSE for privacy** ⚠️
+   - >0.9 = Highly effective attack ❌
+   - <0.3 = Ineffective attack ✅
+
+4. **Similarity Scores**
+   - `avg_similarity_correct` (e.g., 0.70): Average similarity for successful re-identifications
+   - `avg_similarity_incorrect` (e.g., 0.38): Average similarity for failed attempts
+   - **Large gap (>0.3) is WORSE for privacy** ⚠️
+   - Large gap = Model confidently distinguishes real from forged
+   - Small gap (<0.1) = Model struggles to identify real images
+
+5. **Overall Assessment**
+   - **92% accuracy with 0.32 similarity gap**:
+     - ❌ Privacy protection FAILED
+     - ❌ Forgery-based anonymization is ineffective
+     - ❌ Face recognition easily defeats the protection
+     - 🚨 Risk: Attackers can re-identify individuals 92% of the time
+
+   - **Ideal privacy protection** (what we want but don't have):
+     - ✅ Top-1 Accuracy: <10%
+     - ✅ Similarity gap: <0.1
+     - ✅ F1 Score: <0.3
+     - ✅ Meaning: Attacker cannot reliably distinguish real from forged images
+
 ## Research Applications
 
 This tool supports research in:
