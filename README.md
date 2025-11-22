@@ -82,6 +82,8 @@ This creates subdirectories in `data/organized/` with identities that have at le
 
 ### 2. Generate Forged Images
 
+#### Option A: Basic Generation (Single Parameter Set)
+
 Generate adversarial forgeries using Stable Diffusion img2img:
 
 ```bash
@@ -99,6 +101,34 @@ python scripts/generate_forged_img2img.py \
   --limit 100
 ```
 
+#### Option B: Parameter Grid Exploration (V2 - For Final Report)
+
+Generate forgeries with systematic parameter variations for comprehensive evaluation:
+
+```bash
+python scripts/generate_forged_img2img_v2.py \
+  --model stabilityai/stable-diffusion-2-1 \
+  --in-dir data/organized \
+  --meta data/list_attr_celeba.txt \
+  --identity-meta data/list_identity_celeba.txt \
+  --out-dir data/forgeries_v2 \
+  --template "a high-quality portrait photo of a person, {Male}, {Young}, {Black_Hair}, {Smiling}" \
+  --denoise-grid 0.2 0.4 0.6 0.8 \
+  --steps-grid 20 40 60 \
+  --forgery-counts 1 3 5 9 \
+  --cfg-scale 9.0 \
+  --limit 50 \
+  --create-visualizations \
+  --viz-samples 10
+```
+
+**V2 Features:**
+- **Parameter Grid**: Systematically explores combinations of denoising strength, inference steps, and forgery counts
+- **Quality Metrics**: Automatically calculates sharpness, brightness, and contrast for each forgery
+- **Metadata Tracking**: Comprehensive JSON metadata with all parameters and quality scores
+- **Visualizations**: Generates side-by-side real vs. forged comparison grids
+- **Scalability**: Processes N identities with d forgeries per parameter combination
+
 **Key Parameters:**
 
 - `--model`: Stable Diffusion model (default: runwayml/stable-diffusion-v1-5)
@@ -112,6 +142,13 @@ python scripts/generate_forged_img2img.py \
 - `--steps`: Number of inference steps (higher=better quality, slower)
 - `--cfg-scale`: Classifier-free guidance scale (default: 7.5)
 - `--limit`: Limit number of images to process (for testing)
+
+**V2-Specific Parameters:**
+- `--denoise-grid`: List of denoising strengths to explore (e.g., 0.2 0.4 0.6 0.8)
+- `--steps-grid`: List of inference step counts (e.g., 20 40 60)
+- `--forgery-counts`: List of forgery quantities per parameter set (e.g., 1 3 5 9)
+- `--create-visualizations`: Generate side-by-side comparison visualizations
+- `--viz-samples`: Number of identities to create visualizations for (default: 5)
 
 **Denoising Strength Guide:**
 - `0.3-0.4`: Strong identity preservation, subtle changes
@@ -181,6 +218,55 @@ The script generates:
 real,prompt,model,cfg_scale,steps,denoising_strength,forged1,seed1,forged2,seed2,forged3,seed3
 000001.jpg,"a portrait...",runwayml/stable-diffusion-v1-5,7.5,50,0.45,000001_forg_123.png,123,...
 ```
+
+**V2 Output Format:**
+
+`metadata_v2.json` - Comprehensive metadata with parameter grid:
+```json
+{
+  "experiment_config": {
+    "model": "stabilityai/stable-diffusion-2-1",
+    "denoising_grid": [0.2, 0.4, 0.6, 0.8],
+    "steps_grid": [20, 40, 60],
+    "forgery_counts": [1, 3, 5, 9]
+  },
+  "summary": {
+    "total_identities_processed": 50,
+    "total_parameter_combinations": 12,
+    "total_forgeries_generated": 1050
+  },
+  "results": [...]
+}
+```
+
+`visualizations/` - Side-by-side comparison images
+
+### 5. Analyze Forgery Quality (V2)
+
+Analyze quality metrics and generate visualizations:
+
+```bash
+python scripts/analyze_forgery_quality_v2.py \
+  --metadata data/forgeries_v2/metadata_v2.json \
+  --output-dir results/quality_analysis \
+  --use-clip
+```
+
+**Output:**
+- `forgery_quality_analysis.csv` - Detailed metrics for each forgery
+- `quality_summary.csv` - Aggregated statistics by parameter set
+- `quality_visualizations/` - Plots showing:
+  - Quality score vs. denoising strength
+  - CLIP similarity vs. parameters
+  - Quality metric heatmaps
+  - Distribution plots for sharpness, brightness, contrast
+
+**Quality Metrics:**
+- **CLIP Similarity**: Image-image similarity between real and forged (0-1, higher = more similar)
+- **Quality Score**: Combined metric based on sharpness and contrast (0-100, higher = better)
+- **Sharpness**: Laplacian variance (edge detection)
+- **Brightness**: Mean pixel intensity
+- **Contrast**: Standard deviation of pixel intensities
 
 ## Troubleshooting
 
