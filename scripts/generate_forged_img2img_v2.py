@@ -253,27 +253,31 @@ if __name__ == "__main__":
                         help="Create side-by-side visualization grids")
     parser.add_argument("--viz-samples", type=int, default=5,
                         help="Number of identities to create visualizations for")
+    parser.add_argument("--quiet", action='store_true',
+                        help="Reduce output verbosity (disable progress bars and detailed logging)")
     
     args = parser.parse_args()
 
     # Setup device
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Using device: {device}")
-    print(f"\n{'='*80}")
-    print("FORGERY GENERATION V2: PARAMETER GRID EXPLORATION")
-    print(f"{'='*80}\n")
+    if not args.quiet:
+        print(f"Using device: {device}")
+        print(f"\n{'='*80}")
+        print("FORGERY GENERATION V2: PARAMETER GRID EXPLORATION")
+        print(f"{'='*80}\n")
+        
+        # Print parameter grid
+        print("Parameter Grid Configuration:")
+        print(f"  Denoising strengths: {args.denoise_grid}")
+        print(f"  Inference steps: {args.steps_grid}")
+        print(f"  Forgery counts: {args.forgery_counts}")
+        print(f"  CFG scale (fixed): {args.cfg_scale}")
+        print(f"  Total parameter combinations: {len(args.denoise_grid) * len(args.steps_grid) * len(args.forgery_counts)}")
+        print()
     
-    # Print parameter grid
-    print("Parameter Grid Configuration:")
-    print(f"  Denoising strengths: {args.denoise_grid}")
-    print(f"  Inference steps: {args.steps_grid}")
-    print(f"  Forgery counts: {args.forgery_counts}")
-    print(f"  CFG scale (fixed): {args.cfg_scale}")
-    print(f"  Total parameter combinations: {len(args.denoise_grid) * len(args.steps_grid) * len(args.forgery_counts)}")
-    print()
-    
-    # Load model
-    print(f"Loading model: {args.model}")
+    # Load pipeline
+    if not args.quiet:
+        print(f"Loading model: {args.model}")
     
     if device == "cuda":
         pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
@@ -285,9 +289,11 @@ if __name__ == "__main__":
         pipe = pipe.to(device)
         try:
             pipe.enable_xformers_memory_efficient_attention()
-            print("Enabled xformers memory efficient attention")
+            if not args.quiet:
+                print("Enabled xformers memory efficient attention")
         except:
-            print("xformers not available, using default attention")
+            if not args.quiet:
+                print("xformers not available, using default attention")
     else:
         pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
             args.model,
@@ -297,10 +303,12 @@ if __name__ == "__main__":
         )
         pipe = pipe.to(device)
     
-    print("Model loaded successfully\n")
+    if not args.quiet:
+        print("Model loaded successfully\n")
 
     # Load metadata
-    print(f"Loading metadata from: {args.meta}")
+    if not args.quiet:
+        print(f"Loading metadata from: {args.meta}")
     meta = load_metadata(args.meta, args.identity_meta)
     
     # Create output directories
@@ -316,10 +324,13 @@ if __name__ == "__main__":
     
     # Create parameter combinations
     param_combinations = list(itertools.product(args.denoise_grid, args.steps_grid, args.forgery_counts))
-    print(f"\nTotal parameter combinations: {len(param_combinations)}")
-    print(f"Processing up to {args.limit if args.limit else 'all'} identities\n")
+    if not args.quiet:
+        print(f"\nTotal parameter combinations: {len(param_combinations)}")
+        print(f"Processing up to {args.limit if args.limit else 'all'} identities\n")
     
-    for idx, (fname, attrs) in enumerate(tqdm(meta.items(), desc="Processing identities")):
+    # Use tqdm only if not quiet
+    items_iter = meta.items() if args.quiet else tqdm(meta.items(), desc="Processing identities")
+    for idx, (fname, attrs) in enumerate(items_iter):
         # Check limit
         if args.limit and processed >= args.limit:
             break
@@ -412,14 +423,18 @@ if __name__ == "__main__":
             "results": all_results
         }, f, indent=2)
     
-    print(f"\n{'='*80}")
-    print("GENERATION COMPLETE")
-    print(f"{'='*80}")
-    print(f"Processed identities: {processed}")
-    print(f"Parameter combinations per identity: {len(param_combinations)}")
-    print(f"Total forgeries generated: {sum(sum(ps['num_forgeries'] for ps in r['parameter_sets']) for r in all_results)}")
-    print(f"Metadata saved to: {metadata_path}")
-    if args.create_visualizations:
-        print(f"Visualizations created: {viz_created} (saved to {viz_dir}/)")
-    print(f"All forgeries saved to: {args.out_dir}")
-    print(f"{'='*80}\n")
+    if not args.quiet:
+        print(f"\n{'='*80}")
+        print("GENERATION COMPLETE")
+        print(f"{'='*80}")
+        print(f"Processed identities: {processed}")
+        print(f"Parameter combinations per identity: {len(param_combinations)}")
+        print(f"Total forgeries generated: {sum(sum(ps['num_forgeries'] for ps in r['parameter_sets']) for r in all_results)}")
+        print(f"Metadata saved to: {metadata_path}")
+        if args.create_visualizations:
+            print(f"Visualizations created: {viz_created} (saved to {viz_dir}/)")
+        print(f"All forgeries saved to: {args.out_dir}")
+        print(f"{'='*80}\n")
+    else:
+        # In quiet mode, just print essential completion info
+        print(f"Complete: {processed} identities, {sum(sum(ps['num_forgeries'] for ps in r['parameter_sets']) for r in all_results)} forgeries -> {args.out_dir}")
