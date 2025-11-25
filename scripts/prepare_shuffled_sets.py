@@ -60,16 +60,28 @@ class ShuffledSetGenerator:
         return identities
     
     def _load_forgery_mapping(self, mapping_file: str):
-        """Load mapping from real images to forged images"""
+        """Load mapping from real images to forged images (supports V1 and V2 formats)"""
         with open(mapping_file, 'r') as f:
-            mapping_list = json.load(f)
+            data = json.load(f)
         
-        # Convert to dict: {real_filename: [forged_filenames]}
-        for item in mapping_list:
-            real_img = item['real']
-            forged_imgs = item['forged']
-            # Store with just filename as key
-            self.forgery_mapping[real_img] = forged_imgs
+        # Check if this is V2 format (has 'results' key)
+        if isinstance(data, dict) and 'results' in data:
+            # V2 format: nested structure with parameter_sets
+            for result in data['results']:
+                real_img = result['real_image']
+                forged_imgs = []
+                # Collect all forgeries across all parameter sets
+                for param_set in result['parameter_sets']:
+                    for forgery in param_set['forgeries']:
+                        forged_imgs.append(forgery['filename'])
+                self.forgery_mapping[real_img] = forged_imgs
+        else:
+            # V1 format: simple list of mappings
+            for item in data:
+                real_img = item['real']
+                forged_imgs = item['forged']
+                # Store with just filename as key
+                self.forgery_mapping[real_img] = forged_imgs
     
     def _build_image_lookup(self):
         """Build lookup table: basename -> {path, identity_id}"""
