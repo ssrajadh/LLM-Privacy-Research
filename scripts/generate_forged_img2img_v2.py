@@ -15,7 +15,7 @@ from tqdm import tqdm
 from pathlib import Path
 import itertools
 
-def load_metadata(attr_file_path, identity_file_path=None):
+def load_metadata(attr_file_path, identity_file_path=None, quiet=False):
     """
     Load CelebA attributes from list_attr_celeba.txt
     Optionally load identity mapping from list_identity_celeba.txt for organized directories
@@ -35,7 +35,8 @@ def load_metadata(attr_file_path, identity_file_path=None):
                 parts = line.strip().split()
                 if len(parts) >= 2:
                     identity_map[parts[0]] = parts[1]
-        print(f"Loaded identity mapping for {len(identity_map)} images")
+        if not quiet:
+            print(f"Loaded identity mapping for {len(identity_map)} images")
     
     with open(attr_file_path, 'r') as f:
         lines = f.readlines()
@@ -67,7 +68,8 @@ def load_metadata(attr_file_path, identity_file_path=None):
             
             metadata[filename] = attrs
     
-    print(f"Loaded metadata for {len(metadata)} images")
+    if not quiet:
+        print(f"Loaded metadata for {len(metadata)} images")
     return metadata
 
 def build_prompt(attrs, template):
@@ -309,7 +311,7 @@ if __name__ == "__main__":
     # Load metadata
     if not args.quiet:
         print(f"Loading metadata from: {args.meta}")
-    meta = load_metadata(args.meta, args.identity_meta)
+    meta = load_metadata(args.meta, args.identity_meta, quiet=args.quiet)
     
     # Create output directories
     os.makedirs(args.out_dir, exist_ok=True)
