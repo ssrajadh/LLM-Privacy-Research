@@ -1,0 +1,47 @@
+{
+  "args": {
+    "data_dir": "data/organized",
+    "forgery_dir": "data/forgeries_v2",
+    "forgery_mapping": "data/forgeries_v2/mapping.json",
+    "num_forged_per_real": 9,
+    "model": "arcface",
+    "device": "cuda",
+    "defense": "noise_0.01",
+    "list_defenses": false,
+    "num_identities": 50,
+    "num_tests": 50,
+    "num_distractors": 49,
+    "min_images": 10,
+    "output": "results/experiments_v2/openset_arcface_noise_0.01_n50_t50_s42.json",
+    "save_detailed": false,
+    "seed": 42
+  },
+  "metrics": {
+    "total_tests": 50,
+    "top1_accuracy": 0.96,
+    "top1_correct_count": 48,
+    "mrr": 0.9629545454545455,
+    "avg_similarity": 0.6601775613189578,
+    "std_similarity": 0.12749350821184152,
+    "min_similarity": 0.16088413481570235,
+    "max_similarity": 0.9066173333093622,
+    "avg_similarity_correct": 0.680832810241211,
+    "std_similarity_correct": 0.07915400452165018,
+    "avg_similarity_incorrect": 0.16445158718488206,
+    "std_similarity_incorrect": 0.0035674523691797133,
+    "precision": 0.96,
+    "recall": 0.96,
+    "f1_score": 0.96
+  },
+  "defense_info": {
+    "mechanism": "gaussian_noise",
+    "config": {
+      "clip_norm": 1.0,
+      "noise_scale": 0.01,
+      "epsilon": 1.0,
+      "delta": 1e-05,
+      "sensitivity": 2.0,
+      "apply_preprocessing_clip": false
+    }
+  }
+}

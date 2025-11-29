@@ -1,0 +1,49 @@
+{
+  "args": {
+    "data_dir": "data/organized",
+    "forgery_dir": "data/forgeries_v2",
+    "forgery_mapping": "data/forgeries_v2/mapping.json",
+    "num_forged_per_real": 9,
+    "model": "arcface",
+    "device": "cuda",
+    "defense": "dp_laplace_e0.5",
+    "list_defenses": false,
+    "num_identities": 20,
+    "num_tests": 50,
+    "num_distractors": 19,
+    "min_images": 10,
+    "output": "results/experiments_v2/openset_arcface_dp_laplace_e0.5_n20_t50_s42.json",
+    "save_detailed": false,
+    "seed": 42
+  },
+  "metrics": {
+    "total_tests": 50,
+    "top1_accuracy": 0.12,
+    "top1_correct_count": 6,
+    "mrr": 0.214938118740134,
+    "avg_similarity": 0.10926817875506595,
+    "std_similarity": 0.019417878688168848,
+    "min_similarity": 0.07984273130353042,
+    "max_similarity": 0.16927712139418555,
+    "avg_similarity_correct": 0.11257077419054505,
+    "std_similarity_correct": 0.01339301138926765,
+    "avg_similarity_incorrect": 0.10881782483204606,
+    "std_similarity_incorrect": 0.020057925928566582,
+    "precision": 0.12,
+    "recall": 0.12,
+    "f1_score": 0.12
+  },
+  "defense_info": {
+    "mechanism": "dp_laplace",
+    "config": {
+      "clip_norm": 1.0,
+      "noise_scale": 0.1,
+      "epsilon": 0.5,
+      "delta": 1e-05,
+      "sensitivity": 2.0,
+      "apply_preprocessing_clip": false
+    },
+    "computed_noise_scale": 4.0,
+    "privacy_guarantee": "(0.5, 0)-DP"
+  }
+}

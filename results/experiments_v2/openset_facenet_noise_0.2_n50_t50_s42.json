@@ -1,0 +1,47 @@
+{
+  "args": {
+    "data_dir": "data/organized",
+    "forgery_dir": "data/forgeries_v2",
+    "forgery_mapping": "data/forgeries_v2/mapping.json",
+    "num_forged_per_real": 9,
+    "model": "facenet",
+    "device": "cuda",
+    "defense": "noise_0.2",
+    "list_defenses": false,
+    "num_identities": 50,
+    "num_tests": 50,
+    "num_distractors": 49,
+    "min_images": 10,
+    "output": "results/experiments_v2/openset_facenet_noise_0.2_n50_t50_s42.json",
+    "save_detailed": false,
+    "seed": 42
+  },
+  "metrics": {
+    "total_tests": 50,
+    "top1_accuracy": 0.9,
+    "top1_correct_count": 45,
+    "mrr": 0.9308333333333334,
+    "avg_similarity": 0.1984223124990648,
+    "std_similarity": 0.031653310225530834,
+    "min_similarity": 0.11141338525878275,
+    "max_similarity": 0.2823013164752265,
+    "avg_similarity_correct": 0.20157873029848952,
+    "std_similarity_correct": 0.030513729292642462,
+    "avg_similarity_incorrect": 0.1700145523042422,
+    "std_similarity_incorrect": 0.02725552797191193,
+    "precision": 0.9,
+    "recall": 0.9,
+    "f1_score": 0.9
+  },
+  "defense_info": {
+    "mechanism": "gaussian_noise",
+    "config": {
+      "clip_norm": 1.0,
+      "noise_scale": 0.2,
+      "epsilon": 1.0,
+      "delta": 1e-05,
+      "sensitivity": 2.0,
+      "apply_preprocessing_clip": false
+    }
+  }
+}

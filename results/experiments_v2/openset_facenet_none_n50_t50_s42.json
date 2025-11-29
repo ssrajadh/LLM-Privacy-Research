@@ -1,0 +1,39 @@
+{
+  "args": {
+    "data_dir": "data/organized",
+    "forgery_dir": "data/forgeries_v2",
+    "forgery_mapping": "data/forgeries_v2/mapping.json",
+    "num_forged_per_real": 9,
+    "model": "facenet",
+    "device": "cuda",
+    "defense": "none",
+    "list_defenses": false,
+    "num_identities": 50,
+    "num_tests": 50,
+    "num_distractors": 49,
+    "min_images": 10,
+    "output": "results/experiments_v2/openset_facenet_none_n50_t50_s42.json",
+    "save_detailed": false,
+    "seed": 42
+  },
+  "metrics": {
+    "total_tests": 50,
+    "top1_accuracy": 0.98,
+    "top1_correct_count": 49,
+    "mrr": 0.9825,
+    "avg_similarity": 0.772345541715622,
+    "std_similarity": 0.08289768558753707,
+    "min_similarity": 0.5299675464630127,
+    "max_similarity": 0.941512405872345,
+    "avg_similarity_correct": 0.7772920314146547,
+    "std_similarity_correct": 0.07608471392361046,
+    "avg_similarity_incorrect": 0.5299675464630127,
+    "std_similarity_incorrect": 0.0,
+    "precision": 0.98,
+    "recall": 0.98,
+    "f1_score": 0.98
+  },
+  "defense_info": {
+    "mechanism": "none"
+  }
+}

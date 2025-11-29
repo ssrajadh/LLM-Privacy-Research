@@ -1,0 +1,39 @@
+{
+  "args": {
+    "data_dir": "data/organized",
+    "forgery_dir": "data/forgeries_v2",
+    "forgery_mapping": "data/forgeries_v2/mapping.json",
+    "num_forged_per_real": 9,
+    "model": "arcface",
+    "device": "cuda",
+    "defense": "none",
+    "list_defenses": false,
+    "num_identities": 50,
+    "num_tests": 50,
+    "num_distractors": 49,
+    "min_images": 10,
+    "output": "results/experiments_v2/openset_arcface_none_n50_t50_s42.json",
+    "save_detailed": false,
+    "seed": 42
+  },
+  "metrics": {
+    "total_tests": 50,
+    "top1_accuracy": 0.96,
+    "top1_correct_count": 48,
+    "mrr": 0.9655128205128204,
+    "avg_similarity": 0.6747913590073585,
+    "std_similarity": 0.1316678697067914,
+    "min_similarity": 0.1508169174194336,
+    "max_similarity": 0.9224681258201599,
+    "avg_similarity_correct": 0.6962000367542108,
+    "std_similarity_correct": 0.08121690530593437,
+    "avg_similarity_incorrect": 0.16098309308290482,
+    "std_similarity_incorrect": 0.010166175663471222,
+    "precision": 0.96,
+    "recall": 0.96,
+    "f1_score": 0.96
+  },
+  "defense_info": {
+    "mechanism": "none"
+  }
+}
