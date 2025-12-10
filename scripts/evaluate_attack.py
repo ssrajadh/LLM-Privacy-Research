@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author: Youngju Choi
 """
 Evaluate embedding-based identity re-identification attack on shuffled test sets
 

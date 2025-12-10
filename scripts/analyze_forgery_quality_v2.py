@@ -1,3 +1,4 @@
+# Author: Soham Rajadhyaksha
 # scripts/analyze_forgery_quality_v2.py
 """
 Analyze Forgery Quality V2: Comprehensive Quality Assessment

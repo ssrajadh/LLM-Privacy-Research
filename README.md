@@ -6,6 +6,14 @@ Research project investigating privacy vulnerabilities in face recognition syste
 
 This project generates forged facial images using Stable Diffusion img2img to evaluate the robustness of face recognition and multimodal LLM systems against adversarial attacks. The goal is to create realistic variations of celebrity faces while preserving or manipulating specific attributes to test privacy boundaries.
 
+## Task Division
+
+Soham: Dataset Preparation and Preprocessing, Initial Setup (added face dataset, filtered face data, organized identities) + Forged Image Generation (initial + with parameters) + Infrastructure Setup (Google Colab)
+
+Youngju: Attack Evaluation Pipeline + Attack Test Results + Mapping-based forgeries + Defense Mechanisms + Open-set Evaluation + Defense Test Results
+
+Harshit: Midterm Data Visualization
+
 ## Project Structure
 
 ```
@@ -17,17 +25,36 @@ LLM-Privacy-Research/
 │   ├── organized/                  # Filtered dataset organized by identity
 │   │   ├── manifest.csv           # Identities with multiple images
 │   │   └── {identity_id}/         # Subdirectories per identity
-│   └── forgeries/                  # Generated forged images
-│       ├── mapping.json           # Detailed mapping of real→forged images
-│       └── mapping.csv            # CSV version for easier viewing
+│   ├── forgeries/                  # V1 generated forged images (150 images)
+│   │   ├── mapping.json           # Detailed mapping of real→forged images
+│   │   └── mapping.csv            # CSV version for easier viewing
+│   └── forgeries_v2/               # V2 parameter grid forgeries (2,160+ images)
+│       ├── metadata_v2.json       # Comprehensive metadata with parameter grid
+│       └── visualizations/        # Side-by-side comparison images
 ├── scripts/
-│   ├── generate_forged_img2img.py  # Main forgery generation script
-│   ├── organize_identities.py      # Organize dataset by identity
-│   ├── prepare_shuffled_sets.py    # Prepare evaluation sets
-│   ├── embedding_attack.py         # Embedding-based attack evaluation
-│   ├── evaluate_attack.py          # Attack success rate evaluation
-│   └── validate_attributes.py      # Attribute validation utilities
-└── requirements.txt                # Python dependencies
+│   ├── analyze_forgery_quality_v2.py    # Quality analysis with CLIP scores
+│   ├── defense_mechanisms.py            # Defense strategy implementations
+│   ├── embedding_attack.py              # Embedding-based attack evaluation
+│   ├── evaluate_attack.py               # V1 attack success rate evaluation
+│   ├── evaluate_attack_openset.py       # V2 open-set attack evaluation
+│   ├── generate_forged_img2img.py       # V1 forgery generation
+│   ├── generate_forged_img2img_v2.py    # V2 parameter grid generation
+│   ├── generate_mapping_v2.py           # V2 mapping file generator
+│   ├── generate_paper_plots.py          # Publication figure generation
+│   ├── organize_identities.py           # Organize dataset by identity
+│   ├── prepare_shuffled_sets.py         # Prepare evaluation sets (V1/V2 compatible)
+│   ├── run_experiments.py               # Automated defense experiments
+│   └── validate_attributes.py           # Attribute validation utilities
+├── results/
+│   ├── eval_arcface.json           # V1 ArcFace evaluation results
+│   ├── eval_facenet.json           # V1 FaceNet evaluation results
+│   └── experiments_v2/             # V2 defense experiment results
+│       ├── experiment_summary.json # Aggregated defense results
+│       ├── ANALYSIS_REPORT.md     # Defense analysis report
+│       └── results_table.csv      # Defense comparison table
+├── figures/                        # Generated plots and visualizations
+├── requirements.txt                # Python dependencies
+└── requirements-colab.txt          # Google Colab compatible dependencies
 ```
 
 ## Setup
@@ -303,14 +330,26 @@ Check:
 
 ### 5. Prepare Test Sets for Attack Evaluation
 
-Generate shuffled test sets with multiple identities (real + forged images):
+Generate shuffled test sets with mapping-based forgery selection:
 
+**For V1 Forgeries:**
 ```bash
 python scripts/prepare_shuffled_sets.py \
   --data-dir data/organized \
   --forgery-dir data/forgeries \
   --forgery-mapping data/forgeries/mapping.json \
   --output data/shuffled_sets \
+  --num-sets 50 \
+  --seed 42
+```
+
+**For V2 Forgeries:**
+```bash
+python scripts/prepare_shuffled_sets.py \
+  --data-dir data/organized \
+  --forgery-dir data/forgeries_v2 \
+  --forgery-mapping data/forgeries_v2/metadata_v2.json \
+  --output data/shuffled_sets_v2 \
   --num-sets 50 \
   --seed 42
 ```
@@ -332,13 +371,20 @@ Each test set contains:
 
 ### 6. Evaluate Re-identification Attack
 
+#### Basic Attack Evaluation (V1)
+
 Test face recognition robustness using embedding-based attacks:
 
 ```bash
 python scripts/evaluate_attack.py \
   --test-sets data/shuffled_sets/test_sets_metadata.json \
   --model facenet \
-  --output results/eval_results.json
+  --output results/eval_facenet.json
+
+python scripts/evaluate_attack.py \
+  --test-sets data/shuffled_sets/test_sets_metadata.json \
+  --model arcface \
+  --output results/eval_arcface.json
 ```
 
 **Parameters:**
@@ -348,16 +394,58 @@ python scripts/evaluate_attack.py \
 - `--max-sets`: (Optional) Limit number of test sets
 
 **Models:**
-- `facenet`: InceptionResnetV1 trained on VGGFace2
-- `arcface`: InsightFace ArcFace model (requires GPU)
+- `facenet`: InceptionResnetV1 trained on VGGFace2 (128-dim embeddings)
+- `arcface`: InsightFace ArcFace model (512-dim embeddings, requires GPU)
 
 **Example Results:**
 ```
-Top-1 Accuracy: 92% (46/50)
+ArcFace Top-1 Accuracy: 98% (49/50)
+FaceNet Top-1 Accuracy: 96% (48/50)
 - Query: Target's profile photo
-- Found: Target's real image among 40 candidates
-- Success: 92% re-identification rate despite forgery protection
+- Found: Target's real image among candidates
+- Success: 96-98% re-identification rate despite forgery protection
 ```
+
+#### Open-Set Evaluation with Defense Mechanisms (V2)
+
+Evaluate attacks with defensive preprocessing:
+
+```bash
+python scripts/evaluate_attack_openset.py \
+  --forgery-dir data/forgeries_v2 \
+  --metadata data/forgeries_v2/metadata_v2.json \
+  --data-dir data/organized \
+  --model arcface \
+  --defense none \
+  --num-distractors 20 \
+  --num-tests 50 \
+  --output results/experiments_v2/openset_arcface_none_n20_t50_s42.json
+```
+
+**Defense Options:**
+- `none`: No defense (baseline)
+- `noise_X`: Gaussian noise with std=X (e.g., `noise_0.01`, `noise_0.05`, `noise_0.1`, `noise_0.2`)
+- `clip_X`: CLIP-based preprocessing with threshold X (e.g., `clip_0.8`, `clip_1.0`)
+- `dp_gaussian_eX`: Differential privacy Gaussian noise with epsilon=X (e.g., `dp_gaussian_e0.5`, `dp_gaussian_e1.0`)
+- `dp_laplace_eX`: Differential privacy Laplace noise with epsilon=X (e.g., `dp_laplace_e0.5`, `dp_laplace_e1.0`)
+
+**Run Full Defense Experiments:**
+```bash
+python scripts/run_experiments.py \
+  --forgery-dir data/forgeries_v2 \
+  --metadata data/forgeries_v2/metadata_v2.json \
+  --data-dir data/organized \
+  --output-dir results/experiments_v2 \
+  --num-distractors 20 50 \
+  --num-tests 50 \
+  --models facenet arcface
+```
+
+This runs all defense mechanisms across both models and generates:
+- Individual result JSON files
+- `experiment_summary.json` - Aggregated results
+- `results_table.csv` - Comparison table
+- `ANALYSIS_REPORT.md` - Detailed analysis
 
 ### 7. View Results
 

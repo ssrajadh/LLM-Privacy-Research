@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author: Youngju Choi
 """
 Automated Experiment Runner for Open-Set Identity Re-identification
 

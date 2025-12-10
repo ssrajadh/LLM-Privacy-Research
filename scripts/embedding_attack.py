@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author: Youngju Choi
 """
 Embedding-based Identity Re-identification Attack
 

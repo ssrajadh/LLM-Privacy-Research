@@ -1,3 +1,4 @@
+# Author: Soham Rajadhyaksha
 # scripts/generate_forged_img2img_v2.py
 """
 Forgery Generation V2: Parameter Grid Exploration

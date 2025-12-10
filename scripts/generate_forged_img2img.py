@@ -1,3 +1,4 @@
+# Author: Soham Rajadhyaksha
 # scripts/generate_forged_img2img.py
 import os, csv, json, random, argparse
 from PIL import Image

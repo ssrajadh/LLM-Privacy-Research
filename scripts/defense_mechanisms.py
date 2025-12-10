@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author: Youngju Choi
 """
 Defense Mechanisms for Face Recognition Systems
 

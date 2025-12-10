@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author: Youngju Choi
 """
 Open-Set Identity Re-identification Attack Evaluation with Defenses
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author: Soham Rajadhyaksha
 """
 scripts/validate_attributes.py
 

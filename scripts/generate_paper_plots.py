@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author: Harshit Gupta
 """
 Face Recognition Attack Visualization Tool
 

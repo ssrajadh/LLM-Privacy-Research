@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Author: Youngju Choi
 """
 Generate mapping.json from metadata_v2.json for forgeries_v2
 
