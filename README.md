@@ -1,10 +1,10 @@
-# LLM Privacy Research: Adversarial Image Generation
+# Diffusion-Face-Attack
 
-Research project investigating privacy vulnerabilities in face recognition systems using diffusion-based adversarial image generation.
+Adversarial attack framework for face recognition systems using diffusion-based image forgeries.
 
 ## Overview
 
-This project generates forged facial images using Stable Diffusion img2img to evaluate the robustness of face recognition and multimodal LLM systems against adversarial attacks. The goal is to create realistic variations of celebrity faces while preserving or manipulating specific attributes to test privacy boundaries.
+This project investigates vulnerabilities in face recognition systems by generating adversarial forgeries using Stable Diffusion img2img. We systematically evaluate attack effectiveness, parameter sensitivity, and defense mechanisms to understand the security implications of diffusion-based facial image manipulation.
 
 ## Task Division
 
@@ -17,7 +17,7 @@ Harshit: Midterm Data Visualization
 ## Project Structure
 
 ```
-LLM-Privacy-Research/
+Diffusion-Face-Attack/
 ├── data/
 │   ├── list_attr_celeba.txt       # CelebA attribute annotations (40 attributes)
 │   ├── list_identity_celeba.txt   # Identity mappings for CelebA images
@@ -70,8 +70,8 @@ LLM-Privacy-Research/
 
 ```bash
 # Clone the repository
-git clone https://github.com/ssrajadh/LLM-Privacy-Research.git
-cd LLM-Privacy-Research
+git clone https://github.com/ssrajadh/Diffusion-Face-Attack.git
+cd Diffusion-Face-Attack
 
 # Install dependencies
 pip install -r requirements.txt
